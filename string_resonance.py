@@ -26,6 +26,10 @@ f_fin = 300.0        # final frequency in Hz
 
 c = 343.0             # speed of sound in m/s
 
+# 343 m/s is typically the speed of sound in air, and not necessarily
+# on a string. However, it is not that different from typicall values
+# in guitar strings.
+
 mic_pos = x_max/8.0     # microphone position in meters
 
 # Chirp type. The possible values this variable can take are:
@@ -116,6 +120,7 @@ def step_y() :
                  2 * y_now[i] +
                  cdtdx2 * (y_now[i-1] - 2*y_now[i] + y_now[i+1]) )
 
+    # Obstacle :
     i = obs_i
 
     # # harmonic oscillator
@@ -128,7 +133,7 @@ def step_y() :
     k = kappa/dx
     y_next[i] += (dt2*(k/MM) - cdtdx2) * (y_now[i-1] - 2*y_now[i] + y_now[i+1])
 
-def boundary_p(t) :
+def boundary_y(t) :
 
     global y_now, y_prev
     global x, w, phi, ampl
@@ -234,7 +239,7 @@ def animate(t):
     phi = t*(w-wnew) + phi
     w = wnew
 
-    boundary_p(t)
+    boundary_y(t)
     step_y()
 
     if ( len(mic) > 10 ) :
@@ -268,7 +273,6 @@ def animate(t):
         for peak_i in fft_peaks :
             peaks_str += "{:.2f}, ".format(fft_axis[peak_i])
         peaks_str = "Peaks[Hz]: " + peaks_str[:-2]
-        # print type(peaks_str)
         texts[9].set_text(peaks_str)
 
         # solution 'y_next' doesn't have the boundary points, that is
@@ -481,4 +485,4 @@ if output == "fly" :
 elif output == "file" :
     ani.save("string.mp4", writer="avconv", fps=25)
 else :
-    print "ERROR: chirp_type not recognized."
+    print "ERROR: output type not recognized."

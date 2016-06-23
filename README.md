@@ -11,7 +11,13 @@ Source repository : https://github.com/rvelseg/string_resonance
 ## Description
 
 A finite differences python script to simulate resonance in a string
-with an obstacle.
+with an obstacle. It forces the string at the left end with a sine,
+which frequency is monotonically changing. This is, a linear or
+exponential chirp.
+
+Notice that the frequencies of resonance doesn't have wavelengths which
+are perfect multiples of the double of the resonator length. Which
+would be the case if the obstacle were not moving.
 
 ## Sample results
 
