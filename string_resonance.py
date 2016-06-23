@@ -16,8 +16,6 @@ L = 3.0       # resonator length in meters
 x_max = 4.0   # domain length in meters
 
 Nx = 50                          # number of grid points
-dx = x_max/(Nx - 1.0)            # spatial step in meters
-x = arange(0,x_max+dx/2.0,dx)    # spatial domain
 
 t_max = 1.0          # final time in seconds
 
@@ -27,7 +25,7 @@ f_fin = 300.0        # final frequency in Hz
 c = 343.0             # speed of sound in m/s
 
 # 343 m/s is typically the speed of sound in air, and not necessarily
-# on a string. However, it is not that different from typicall values
+# on a string. However, it is not that different from typical values
 # in guitar strings.
 
 mic_pos = x_max/8.0     # microphone position in meters
@@ -69,6 +67,9 @@ phi = 0.0              # phase correction
 s_fc = 1.0
 n = 0                  # current step
 init_sim = 0
+
+dx = x_max/(Nx - 1.0)            # spatial step in meters
+x = arange(0,x_max+dx/2.0,dx)    # spatial domain
 
 cdtdx2 = (c*dt/dx)**2
 dt2 = dt*dt
@@ -272,7 +273,7 @@ def animate(t):
         peaks_str = ""
         for peak_i in fft_peaks :
             peaks_str += "{:.2f}, ".format(fft_axis[peak_i])
-        peaks_str = "Peaks[Hz]: " + peaks_str[:-2]
+        peaks_str = "FFT peaks [Hz]: " + peaks_str[:-2]
         texts[9].set_text(peaks_str)
 
         # solution 'y_next' doesn't have the boundary points, that is
