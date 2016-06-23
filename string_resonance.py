@@ -15,7 +15,8 @@ ampl = 1      # amplitude of the emitted wave
 L = 3.0       # resonator length in meters
 x_max = 4.0   # domain length in meters
 
-Nx = 50                          # number of grid points
+Nx = 50                                    # number of grid points
+dx = x_max/(Nx - 1.0) # *don't change*     # spatial step in meters
 
 t_max = 1.0          # final time in seconds
 
@@ -68,7 +69,6 @@ s_fc = 1.0
 n = 0                  # current step
 init_sim = 0
 
-dx = x_max/(Nx - 1.0)            # spatial step in meters
 x = arange(0,x_max+dx/2.0,dx)    # spatial domain
 
 cdtdx2 = (c*dt/dx)**2
