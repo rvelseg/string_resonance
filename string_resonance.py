@@ -118,8 +118,8 @@ def step_y() :
 
     for i in range(1, len(y_next)-1) :
         y_next[i] = (- y_prev[i] +
-                 2 * y_now[i] +
-                 cdtdx2 * (y_now[i-1] - 2*y_now[i] + y_now[i+1]) )
+                     2 * y_now[i] +
+                     cdtdx2 * (y_now[i-1] - 2*y_now[i] + y_now[i+1]) )
 
     # Obstacle :
     i = obs_i
@@ -224,6 +224,8 @@ def animate(t):
     global mic_t, mic
     global fft_spec, fft_axis, fft_axis_t, fft_peaks
 
+    # TODO: This approach has acumulative error, the value of the
+    # frequency can be calculated without its previous value, do that.
     if chirp_type == "exp" :
         wnew = w * ( f_fin / f_ini )**(s_fc*dt/t_max)
     elif chirp_type == "lin" :
@@ -237,7 +239,7 @@ def animate(t):
         print "ERROR: chirp_type not recognized."
         return
 
-    phi = t*(w-wnew) + phi
+    phi += t*(w-wnew)
     w = wnew
 
     boundary_y(t)
